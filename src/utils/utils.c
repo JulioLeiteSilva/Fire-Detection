@@ -8,13 +8,20 @@ pthread_mutex_t forest_mutex;
 
 char forest[SIZE][SIZE];
 
+
 void initialize_forest() {
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
-            forest[i][j] = 'T';
+            // Definir 20% da floresta como área livre (sem sensores)
+            if (rand() % 5 == 0) {
+                forest[i][j] = '-';  // Área livre (20% de chance)
+            } else {
+                forest[i][j] = 'T';  // Sensor ativo
+            }
         }
     }
 }
+
 
 void print_forest() {
     pthread_mutex_lock(&forest_mutex);
