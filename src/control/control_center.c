@@ -8,6 +8,8 @@ extern pthread_mutex_t forest_mutex;
 
 void *central_control(void *args)
 {
+    log_message("Central de controle iniciada.");
+
     while (1)
     {
         pthread_mutex_lock(&forest_mutex);
@@ -15,14 +17,18 @@ void *central_control(void *args)
         {
             for (int j = 0; j < SIZE; j++)
             {
-                if (forest[i][j] == '@')
-                {
-                    forest[i][j] = '/';
+                if (forest[i][j] == 'D')
+                { // Célula marcada como "detectada"
+                    log_message("Fogo combatido, célula marcada como queimada.");
+                    forest[i][j] = '/'; // Apagar o fogo
+                    sleep(2);           // Tempo para combater o incêndio
                 }
             }
         }
         pthread_mutex_unlock(&forest_mutex);
-        sleep(1);
+
+        sleep(3); // Espera entre as ações de controle
     }
+
     return NULL;
 }

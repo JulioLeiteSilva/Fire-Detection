@@ -3,6 +3,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <time.h>
 #include "../utils/utils.h"
 
 extern char forest[SIZE][SIZE];
@@ -20,6 +21,7 @@ void *fire_generator(void *args)
         if (forest[x][y] == 'T')
         {
             forest[x][y] = '@';
+            log_message("Fire Generator", "Incêndio iniciado");
             printf("Incêndio iniciado em [%d, %d]\n", x, y);
         }
         pthread_mutex_unlock(&forest_mutex);
